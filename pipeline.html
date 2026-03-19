@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rylem — Pipeline Tracker</title>
+<style>
+  :root {
+    --navy: #0f1729;
+    --dark: #1a2332;
+    --card: #1e2a3a;
+    --border: #2a3a4e;
+    --accent: #4f8cff;
+    --green: #34d399;
+    --yellow: #fbbf24;
+    --red: #f87171;
+    --orange: #fb923c;
+    --text: #e2e8f0;
+    --muted: #94a3b8;
+    --white: #ffffff;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--navy); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
+
+  .header { background: var(--dark); border-bottom: 1px solid var(--border); padding: 16px 32px; display: flex; align-items: center; justify-content: space-between; }
+  .header h1 { font-size: 20px; font-weight: 600; color: var(--white); }
+  .header h1 span { color: var(--accent); }
+  .header .meta { color: var(--muted); font-size: 13px; }
+
+  .tabs { display: flex; gap: 0; background: var(--dark); padding: 0 32px; border-bottom: 1px solid var(--border); }
+  .tab { padding: 12px 24px; font-size: 14px; color: var(--muted); cursor: pointer; border-bottom: 2px solid transparent; transition: all 0.2s; }
+  .tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+  .tab:hover { color: var(--text); }
+
+  .kpi-row { display: grid; grid-template-columns: repeat(6, 1fr); gap: 16px; padding: 24px 32px; }
+  .kpi { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 20px; }
+  .kpi .label { font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
+  .kpi .value { font-size: 28px; font-weight: 700; color: var(--white); }
+  .kpi .sub { font-size: 12px; color: var(--muted); margin-top: 4px; }
+  .kpi .value.green { color: var(--green); }
+  .kpi .value.yellow { color: var(--yellow); }
+  .kpi .value.red { color: var(--red); }
+
+  .section { padding: 0 32px 24px; }
+  .section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
+  .section-header h2 { font-size: 16px; font-weight: 600; }
+  .badge { display: inline-block; padding: 3px 10px; border-radius: 12px; font-size: 11px; font-weight: 600; }
+  .badge-green { background: rgba(52,211,153,0.15); color: var(--green); }
+  .badge-yellow { background: rgba(251,191,36,0.15); color: var(--yellow); }
+  .badge-red { background: rgba(248,113,113,0.15); color: var(--red); }
+  .badge-blue { background: rgba(79,140,255,0.15); color: var(--accent); }
+
+  /* Pipeline columns */
+  .pipeline { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; }
+  .pipeline-col { background: var(--dark); border: 1px solid var(--border); border-radius: 10px; min-height: 400px; }
+  .pipeline-col-header { padding: 14px 16px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
+  .pipeline-col-header h3 { font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+  .pipeline-col-header .count { background: var(--border); color: var(--muted); padding: 2px 8px; border-radius: 8px; font-size: 11px; }
+  .pipeline-col-body { padding: 8px; }
+
+  .deal-card { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 14px; margin-bottom: 8px; cursor: pointer; transition: all 0.15s; }
+  .deal-card:hover { border-color: var(--accent); transform: translateY(-1px); }
+  .deal-card .company { font-size: 14px; font-weight: 600; color: var(--white); margin-bottom: 6px; }
+  .deal-card .detail { font-size: 12px; color: var(--muted); margin-bottom: 3px; }
+  .deal-card .detail strong { color: var(--text); }
+  .deal-card .tags { display: flex; gap: 6px; margin-top: 8px; flex-wrap: wrap; }
+  .deal-card .tag { font-size: 10px; padding: 2px 8px; border-radius: 6px; }
+  .tag-vms { background: rgba(79,140,255,0.15); color: var(--accent); }
+  .tag-nonvms { background: rgba(52,211,153,0.15); color: var(--green); }
+  .tag-risk { background: rgba(248,113,113,0.15); color: var(--red); }
+  .tag-expand { background: rgba(251,191,36,0.15); color: var(--yellow); }
+  .tag-new { background: rgba(168,85,247,0.15); color: #a855f7; }
+
+  .revenue-bar { height: 4px; background: var(--border); border-radius: 2px; margin-top: 8px; }
+  .revenue-bar .fill { height: 100%; border-radius: 2px; background: var(--accent); }
+
+  /* Table */
+  .table-wrap { background: var(--card); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
+  table { width: 100%; border-collapse: collapse; }
+  th { background: var(--dark); padding: 12px 16px; text-align: left; font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600; }
+  td { padding: 12px 16px; border-top: 1px solid var(--border); font-size: 13px; }
+  tr:hover td { background: rgba(79,140,255,0.04); }
+  .dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; margin-right: 6px; }
+  .dot-green { background: var(--green); }
+  .dot-yellow { background: var(--yellow); }
+  .dot-red { background: var(--red); }
+  .dot-blue { background: var(--accent); }
+  .dot-gray { background: #475569; }
+
+  .risk-indicator { display: flex; align-items: center; gap: 4px; }
+  .bar-mini { width: 60px; height: 6px; background: var(--border); border-radius: 3px; }
+  .bar-mini .fill { height: 100%; border-radius: 3px; }
+
+  .salesperson-toggle { display: flex; gap: 8px; }
+  .sp-btn { padding: 6px 16px; border-radius: 6px; font-size: 13px; background: var(--card); border: 1px solid var(--border); color: var(--muted); cursor: pointer; }
+  .sp-btn.active { background: var(--accent); color: var(--white); border-color: var(--accent); }
+
+  .alert-bar { margin: 0 32px 16px; padding: 14px 20px; background: rgba(248,113,113,0.08); border: 1px solid rgba(248,113,113,0.2); border-radius: 8px; display: flex; align-items: center; gap: 12px; }
+  .alert-bar .icon { font-size: 18px; }
+  .alert-bar .text { font-size: 13px; color: var(--text); }
+  .alert-bar .text strong { color: var(--red); }
+
+  .activity-feed { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .feed-card { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 20px; }
+  .feed-card h3 { font-size: 14px; font-weight: 600; margin-bottom: 12px; }
+  .feed-item { display: flex; gap: 10px; padding: 8px 0; border-top: 1px solid var(--border); }
+  .feed-item:first-of-type { border-top: none; }
+  .feed-dot { width: 6px; height: 6px; border-radius: 50%; margin-top: 6px; flex-shrink: 0; }
+  .feed-text { font-size: 12px; color: var(--muted); line-height: 1.5; }
+  .feed-text strong { color: var(--text); }
+  .feed-time { font-size: 11px; color: #475569; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>Rylem <span>Pipeline</span></h1>
+  <div style="display:flex;align-items:center;gap:20px;">
+    <div class="salesperson-toggle">
+      <div class="sp-btn active">All</div>
+      <div class="sp-btn">Julia</div>
+      <div class="sp-btn">April</div>
+      <div class="sp-btn">Mike</div>
+    </div>
+    <div class="meta">Updated: Mar 19, 2026 · 7:47 AM PT</div>
+  </div>
+</div>
+
+<div class="tabs">
+  <div class="tab active">Pipeline</div>
+  <div class="tab">Client List</div>
+  <div class="tab">Activity</div>
+  <div class="tab">Dormant</div>
+  <div class="tab">Prospecting</div>
+</div>
+
+<!-- KPIs -->
+<div class="kpi-row">
+  <div class="kpi">
+    <div class="label">Monthly Revenue</div>
+    <div class="value">$383K</div>
+    <div class="sub">↓ $37K from Jan</div>
+  </div>
+  <div class="kpi">
+    <div class="label">Active Clients</div>
+    <div class="value">15</div>
+    <div class="sub">2 cooling, 1 at risk</div>
+  </div>
+  <div class="kpi">
+    <div class="label">Contractors</div>
+    <div class="value">48</div>
+    <div class="sub">20 VMS · 28 Non-VMS</div>
+  </div>
+  <div class="kpi">
+    <div class="label">Prospecting</div>
+    <div class="value green">1,117</div>
+    <div class="sub">32 companies active</div>
+  </div>
+  <div class="kpi">
+    <div class="label">Dormant Accounts</div>
+    <div class="value yellow">10</div>
+    <div class="sub">$0 revenue, warm history</div>
+  </div>
+  <div class="kpi">
+    <div class="label">Margin (Feb)</div>
+    <div class="value">19.7%</div>
+    <div class="sub">VMS 25.6% · Non 33.7%</div>
+  </div>
+</div>
+
+<!-- Alert -->
+<div class="alert-bar">
+  <div class="icon">⚠️</div>
+  <div class="text"><strong>3 accounts need attention:</strong> Amazon VMS (declining — 43→5 contractors), Project Kuiper (137 contacts, 1 placement), PACCAR (506 contacts, $11K billing — should be $50K+)</div>
+</div>
+
+<!-- Pipeline Kanban -->
+<div class="section">
+  <div class="section-header">
+    <h2>Sales Pipeline</h2>
+    <span class="badge badge-blue">Julia McMurtrey</span>
+  </div>
+  <div class="pipeline">
+    <!-- Prospecting -->
+    <div class="pipeline-col">
+      <div class="pipeline-col-header">
+        <h3 style="color:var(--accent)">Prospecting</h3>
+        <span class="count">19</span>
+      </div>
+      <div class="pipeline-col-body">
+        <div class="deal-card">
+          <div class="company">Anduril</div>
+          <div class="detail">39 contacts · Defense tech</div>
+          <div class="detail">Last outreach: <strong>Mar 12</strong></div>
+          <div class="tags"><span class="tag tag-new">New Client</span></div>
+        </div>
+        <div class="deal-card">
+          <div class="company">eBay</div>
+          <div class="detail">94 contacts</div>
+          <div class="detail">Last outreach: <strong>Mar 13</strong></div>
+          <div class="tags"><span class="tag tag-new">New Client</span></div>
+        </div>
+        <div class="deal-card">
+          <div class="company">Riot Games</div>
+          <div class="detail">69 contacts · Gaming</div>
+          <div class="detail">Last outreach: <strong>Mar 18</strong></div>
+          <div class="tags"><span class="tag tag-new">New Client</span></div>
+        </div>
+        <div class="deal-card" style="opacity:0.5">
+          <div class="detail" style="text-align:center;padding:8px 0">+16 more companies</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- First Touch -->
+    <div class="pipeline-col">
+      <div class="pipeline-col-header">
+        <h3 style="color:var(--yellow)">First Touch</h3>
+        <span class="count">3</span>
+      </div>
+      <div class="pipeline-col-body">
+        <div class="deal-card">
+          <div class="company">A Place For Mom</div>
+          <div class="detail">43 contacts reached</div>
+          <div class="detail">Outreach: <strong>Feb 26</strong></div>
+          <div class="detail" style="color:var(--yellow)">No meeting booked yet</div>
+          <div class="tags"><span class="tag tag-expand">Needs Push</span></div>
+        </div>
+        <div class="deal-card">
+          <div class="company">Perkins Coie</div>
+          <div class="detail">68 contacts · 1 active contractor</div>
+          <div class="detail" style="color:var(--yellow)">Never met — outreach only</div>
+          <div class="tags"><span class="tag tag-nonvms">Non-VMS</span></div>
+        </div>
+        <div class="deal-card">
+          <div class="company">Gates Foundation</div>
+          <div class="detail">41 contacts</div>
+          <div class="detail">Last outreach: <strong>Feb 25</strong></div>
+          <div class="tags"><span class="tag tag-new">New Client</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Meeting / Active -->
+    <div class="pipeline-col">
+      <div class="pipeline-col-header">
+        <h3 style="color:var(--green)">Active / Meeting</h3>
+        <span class="count">8</span>
+      </div>
+      <div class="pipeline-col-body">
+        <div class="deal-card">
+          <div class="company">PACCAR</div>
+          <div class="detail">2 contractors · <strong>$10.7K/mo</strong></div>
+          <div class="detail">Last meeting: <strong>Dec 10</strong></div>
+          <div class="detail" style="color:var(--yellow)">506 contacts — massive expand potential</div>
+          <div class="tags"><span class="tag tag-nonvms">Non-VMS</span><span class="tag tag-expand">Expand</span></div>
+          <div class="revenue-bar"><div class="fill" style="width:12%"></div></div>
+        </div>
+        <div class="deal-card">
+          <div class="company">Funko</div>
+          <div class="detail">1 contractor · <strong>$4.5K/mo</strong></div>
+          <div class="detail">Last meeting: <strong>Nov 7</strong></div>
+          <div class="tags"><span class="tag tag-nonvms">Non-VMS</span></div>
+          <div class="revenue-bar"><div class="fill" style="width:5%"></div></div>
+        </div>
+        <div class="deal-card">
+          <div class="company">Costco</div>
+          <div class="detail">2 contractors · <strong>$7.5K/mo</strong></div>
+          <div class="detail">Last meeting: <strong>Dec 15</strong></div>
+          <div class="detail" style="color:var(--yellow)">Cooling — 90 days no meeting</div>
+          <div class="tags"><span class="tag tag-nonvms">Non-VMS</span><span class="tag tag-risk">Cooling</span></div>
+          <div class="revenue-bar"><div class="fill" style="width:8%"></div></div>
+        </div>
+        <div class="deal-card">
+          <div class="company">Harbor Global</div>
+          <div class="detail">2 contractors · <strong>$6K/mo</strong></div>
+          <div class="detail">Last meeting: <strong>Dec 18</strong></div>
+          <div class="tags"><span class="tag tag-nonvms">Non-VMS</span></div>
+          <div class="revenue-bar"><div class="fill" style="width:6%"></div></div>
+        </div>
+        <div class="deal-card" style="opacity:0.5">
+          <div class="detail" style="text-align:center;padding:8px 0">+4 more active</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Expanding -->
+    <div class="pipeline-col">
+      <div class="pipeline-col-header">
+        <h3 style="color:#a855f7">Expanding</h3>
+        <span class="count">3</span>
+      </div>
+      <div class="pipeline-col-body">
+        <div class="deal-card" style="border-left:3px solid var(--accent)">
+          <div class="company">Microsoft VMS</div>
+          <div class="detail">11 contractors · <strong>$124K/mo</strong></div>
+          <div class="detail">32% of total revenue</div>
+          <div class="detail" style="color:var(--green)">Top 15 supplier · Diversity cert</div>
+          <div class="tags"><span class="tag tag-vms">VMS</span><span class="tag tag-expand">Top Account</span></div>
+          <div class="revenue-bar"><div class="fill" style="width:100%;background:var(--green)"></div></div>
+        </div>
+        <div class="deal-card">
+          <div class="company">Project Kuiper</div>
+          <div class="detail">1 contractor · <strong>$3.8K/mo</strong></div>
+          <div class="detail" style="color:var(--orange)">137 contacts, 1 placement ⚠️</div>
+          <div class="detail">Should be 5-10 contractors</div>
+          <div class="tags"><span class="tag tag-vms">VMS</span><span class="tag tag-risk">Underperforming</span></div>
+          <div class="revenue-bar"><div class="fill" style="width:4%"></div></div>
+        </div>
+        <div class="deal-card">
+          <div class="company">Accordant</div>
+          <div class="detail">3 contractors · <strong>$8.5K/mo</strong></div>
+          <div class="tags"><span class="tag tag-nonvms">Non-VMS</span></div>
+          <div class="revenue-bar"><div class="fill" style="width:9%"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- At Risk / Dormant -->
+    <div class="pipeline-col">
+      <div class="pipeline-col-header">
+        <h3 style="color:var(--red)">At Risk / Dormant</h3>
+        <span class="count">5</span>
+      </div>
+      <div class="pipeline-col-body">
+        <div class="deal-card" style="border-left:3px solid var(--red)">
+          <div class="company">Amazon VMS</div>
+          <div class="detail">5 contractors · <strong>$38K/mo</strong></div>
+          <div class="detail" style="color:var(--red)">Was 43 placements → now 5</div>
+          <div class="detail">Declining fast. Needs intervention.</div>
+          <div class="tags"><span class="tag tag-vms">VMS</span><span class="tag tag-risk">At Risk</span></div>
+          <div class="revenue-bar"><div class="fill" style="width:38%;background:var(--red)"></div></div>
+        </div>
+        <div class="deal-card">
+          <div class="company">TrueBlue</div>
+          <div class="detail">0 contractors · <strong>$0/mo</strong></div>
+          <div class="detail">105 placements since 2010</div>
+          <div class="detail" style="color:var(--yellow)">GDM pitch drafted. Needs call.</div>
+          <div class="tags"><span class="tag tag-risk">Dormant</span></div>
+        </div>
+        <div class="deal-card">
+          <div class="company">Optimum Energy</div>
+          <div class="detail">0 contractors · <strong>$0/mo</strong></div>
+          <div class="detail">19 placements · 13-year relationship</div>
+          <div class="tags"><span class="tag tag-risk">Dormant</span></div>
+        </div>
+        <div class="deal-card">
+          <div class="company">F5</div>
+          <div class="detail">0 contractors · <strong>$0/mo</strong></div>
+          <div class="detail">6 Sr Director contacts met</div>
+          <div class="detail" style="color:var(--red)">Warm but not converting</div>
+          <div class="tags"><span class="tag tag-risk">Dormant</span></div>
+        </div>
+        <div class="deal-card">
+          <div class="company">GameStop</div>
+          <div class="detail">30 contacts</div>
+          <div class="detail" style="color:var(--red)">Last meeting: Apr 2025</div>
+          <div class="tags"><span class="tag tag-risk">Dormant</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Client Detail Table -->
+<div class="section">
+  <div class="section-header">
+    <h2>Client Detail — All Active Revenue</h2>
+  </div>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Client</th>
+          <th>BDM</th>
+          <th>Contractors</th>
+          <th>Monthly Rev</th>
+          <th>Type</th>
+          <th>Last Touch</th>
+          <th>Health</th>
+          <th>Action Needed</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Microsoft VMS</strong></td>
+          <td>Mike</td>
+          <td>11</td>
+          <td>$124,000</td>
+          <td><span class="badge badge-blue">VMS</span></td>
+          <td>Mar 18</td>
+          <td><span class="dot dot-green"></span>Strong</td>
+          <td style="color:var(--muted)">Pull all HMs from CEIPAL</td>
+        </tr>
+        <tr>
+          <td><strong>Amazon VMS</strong></td>
+          <td>Mike</td>
+          <td>5</td>
+          <td>$38,000</td>
+          <td><span class="badge badge-blue">VMS</span></td>
+          <td>Feb 14</td>
+          <td><span class="dot dot-red"></span>At Risk</td>
+          <td style="color:var(--red)">Down 88% from peak. Root cause?</td>
+        </tr>
+        <tr>
+          <td><strong>UpTop</strong></td>
+          <td>Julia</td>
+          <td>6</td>
+          <td>$15,000</td>
+          <td><span class="badge badge-green">Non-VMS</span></td>
+          <td>Mar 5</td>
+          <td><span class="dot dot-yellow"></span>Low Margin</td>
+          <td style="color:var(--muted)">Payroll model — margin review</td>
+        </tr>
+        <tr>
+          <td><strong>PACCAR</strong></td>
+          <td>Julia</td>
+          <td>2</td>
+          <td>$10,700</td>
+          <td><span class="badge badge-green">Non-VMS</span></td>
+          <td>Dec 10</td>
+          <td><span class="dot dot-yellow"></span>Under-penetrated</td>
+          <td style="color:var(--orange)">506 contacts → only 2 ctrs. Push hard.</td>
+        </tr>
+        <tr>
+          <td><strong>Accordant</strong></td>
+          <td>Julia</td>
+          <td>3</td>
+          <td>$8,500</td>
+          <td><span class="badge badge-green">Non-VMS</span></td>
+          <td>Jan 9</td>
+          <td><span class="dot dot-green"></span>Stable</td>
+          <td style="color:var(--muted)">—</td>
+        </tr>
+        <tr>
+          <td><strong>Costco</strong></td>
+          <td>Julia</td>
+          <td>2</td>
+          <td>$7,500</td>
+          <td><span class="badge badge-green">Non-VMS</span></td>
+          <td>Dec 15</td>
+          <td><span class="dot dot-yellow"></span>Cooling</td>
+          <td style="color:var(--yellow)">90+ days no meeting. Re-engage.</td>
+        </tr>
+        <tr>
+          <td><strong>Harbor Global</strong></td>
+          <td>Julia</td>
+          <td>2</td>
+          <td>$6,000</td>
+          <td><span class="badge badge-green">Non-VMS</span></td>
+          <td>Dec 18</td>
+          <td><span class="dot dot-yellow"></span>On Hold</td>
+          <td style="color:var(--muted)">HOLD per Julia's AOP</td>
+        </tr>
+        <tr>
+          <td><strong>Funko</strong></td>
+          <td>Julia</td>
+          <td>1</td>
+          <td>$4,500</td>
+          <td><span class="badge badge-green">Non-VMS</span></td>
+          <td>Jan 16</td>
+          <td><span class="dot dot-green"></span>Stable</td>
+          <td style="color:var(--muted)">New exec hires — expand opportunity</td>
+        </tr>
+        <tr>
+          <td><strong>Project Kuiper</strong></td>
+          <td>Julia</td>
+          <td>1</td>
+          <td>$3,800</td>
+          <td><span class="badge badge-blue">VMS</span></td>
+          <td>Feb 27</td>
+          <td><span class="dot dot-red"></span>Underperforming</td>
+          <td style="color:var(--red)">137 contacts → 1 placement. Why?</td>
+        </tr>
+        <tr>
+          <td><strong>T-Mobile</strong></td>
+          <td>Mike</td>
+          <td>2</td>
+          <td>$3,500</td>
+          <td><span class="badge badge-blue">VMS</span></td>
+          <td>Mar 1</td>
+          <td><span class="dot dot-green"></span>Stable</td>
+          <td style="color:var(--muted)">—</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Activity + Automation -->
+<div class="section">
+  <div class="activity-feed">
+    <div class="feed-card">
+      <h3>📬 Recent Outreach</h3>
+      <div class="feed-item">
+        <div class="feed-dot" style="background:var(--green)"></div>
+        <div>
+          <div class="feed-text"><strong>Diversity Batch 1</strong> — 8 emails sent to Salesforce, Avalara, Okta, Highspot, Redfin, DocuSign</div>
+          <div class="feed-time">Mar 18, 4:45 PM</div>
+        </div>
+      </div>
+      <div class="feed-item">
+        <div class="feed-dot" style="background:var(--accent)"></div>
+        <div>
+          <div class="feed-text"><strong>Competitor intel</strong> — Rounds 1 & 2 emailed to Julia (12 companies identified)</div>
+          <div class="feed-time">Mar 18, 5:08 PM</div>
+        </div>
+      </div>
+      <div class="feed-item">
+        <div class="feed-dot" style="background:var(--yellow)"></div>
+        <div>
+          <div class="feed-text"><strong>Diversity Batch 2</strong> — 11 contacts approved, sending today</div>
+          <div class="feed-time">Mar 19, 6:49 AM</div>
+        </div>
+      </div>
+      <div class="feed-item">
+        <div class="feed-dot" style="background:var(--green)"></div>
+        <div>
+          <div class="feed-text"><strong>LinkedIn targets</strong> — 19 URLs sent to Mike for follow campaign</div>
+          <div class="feed-time">Mar 19, 7:24 AM</div>
+        </div>
+      </div>
+    </div>
+    <div class="feed-card">
+      <h3>🤖 Automated Next Actions</h3>
+      <div class="feed-item">
+        <div class="feed-dot" style="background:var(--red)"></div>
+        <div>
+          <div class="feed-text"><strong>Today 9 AM</strong> — Lanni productivity audit (Outlook, QB, RingCentral)</div>
+          <div class="feed-time">Scheduled</div>
+        </div>
+      </div>
+      <div class="feed-item">
+        <div class="feed-dot" style="background:var(--accent)"></div>
+        <div>
+          <div class="feed-text"><strong>Mon 8:30 AM</strong> — Leadership L10 scorecard auto-generated</div>
+          <div class="feed-time">Weekly</div>
+        </div>
+      </div>
+      <div class="feed-item">
+        <div class="feed-dot" style="background:var(--accent)"></div>
+        <div>
+          <div class="feed-text"><strong>Tue 8:30 AM</strong> — Sales & NonVMS L10 scorecard</div>
+          <div class="feed-time">Weekly</div>
+        </div>
+      </div>
+      <div class="feed-item">
+        <div class="feed-dot" style="background:var(--accent)"></div>
+        <div>
+          <div class="feed-text"><strong>Wed 8:30 AM</strong> — VMS L10 scorecard for Liza</div>
+          <div class="feed-time">Weekly</div>
+        </div>
+      </div>
+      <div class="feed-item">
+        <div class="feed-dot" style="background:var(--yellow)"></div>
+        <div>
+          <div class="feed-text"><strong>Mar 22</strong> — Diversity Batch 1 follow-up emails (Day 4)</div>
+          <div class="feed-time">Auto-send</div>
+        </div>
+      </div>
+      <div class="feed-item">
+        <div class="feed-dot" style="background:var(--green)"></div>
+        <div>
+          <div class="feed-text"><strong>Every Monday</strong> — Pipeline health report + risk alerts</div>
+          <div class="feed-time">Starting next week</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>window.RYLEM_CHAT_MODE="pipeline";</script>
+<script src="chat-widget.js"></script>
+</body>
+</html>
+<!-- rebuilt Thu Mar 19 13:27:18 PDT 2026 -->
