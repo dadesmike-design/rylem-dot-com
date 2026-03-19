@@ -1,0 +1,251 @@
+{
+  "boards": [
+    {
+      "name": "Rylem Pipeline",
+      "cards": [
+        {
+          "id": "lead-fis",
+          "company": "FIS (Fidelity National)",
+          "contact": "Supplier Diversity / Procurement",
+          "value": 150000,
+          "signal": "Actively hiring Supplier Diversity Program Lead — building diverse vendor program NOW",
+          "column": "New Leads",
+          "source": "AI Research",
+          "date": "2026-03-09",
+          "tags": ["IT", "Finance"]
+        },
+        {
+          "id": "lead-tenet",
+          "company": "Tenet Healthcare",
+          "contact": "Corporate Procurement / Supplier Diversity",
+          "value": 120000,
+          "signal": "100K+ employees, massive corporate back-office: IT, finance, HR, admin staffing needs",
+          "column": "New Leads",
+          "source": "AI Research",
+          "date": "2026-03-09",
+          "tags": ["IT", "Finance", "Admin", "HR"]
+        },
+        {
+          "id": "lead-morningstar",
+          "company": "Morningstar",
+          "contact": "Procurement / Supplier Diversity",
+          "value": 100000,
+          "signal": "10K employees, Chicago HQ. Finance + IT + marketing. Active diversity supplier program",
+          "column": "New Leads",
+          "source": "AI Research",
+          "date": "2026-03-09",
+          "tags": ["Finance", "IT", "Marketing"]
+        },
+        {
+          "id": "lead-hubspot",
+          "company": "HubSpot",
+          "contact": "Procurement / TA Leadership",
+          "value": 90000,
+          "signal": "7K employees, remote-friendly, strong DEI. Needs engineers, marketing, HR, admin",
+          "column": "New Leads",
+          "source": "AI Research",
+          "date": "2026-03-09",
+          "tags": ["IT", "Marketing", "HR", "Admin"]
+        },
+        {
+          "id": "lead-onetrust",
+          "company": "OneTrust",
+          "contact": "VP of People / Talent Acquisition",
+          "value": 80000,
+          "signal": "Atlanta compliance tech, 2K+ employees scaling fast. IT, marketing, HR, admin needs",
+          "column": "New Leads",
+          "source": "AI Research",
+          "date": "2026-03-09",
+          "tags": ["IT", "Marketing", "HR"]
+        },
+        {
+          "id": "lead-zillow",
+          "company": "Zillow Group",
+          "contact": "HR Leadership (post-restructure)",
+          "value": 80000,
+          "signal": "Post-layoff (200 in Jan 2026) — backfilling with contract engineers, data, marketing",
+          "column": "New Leads",
+          "source": "AI Research",
+          "date": "2026-03-09",
+          "tags": ["IT", "Marketing"]
+        },
+        {
+          "id": "lead-chewy",
+          "company": "Chewy",
+          "contact": "Supplier Diversity Portal",
+          "value": 75000,
+          "signal": "20K employees, FL HQ + multi-city. Formal supplier diversity program. Admin, IT, marketing",
+          "column": "New Leads",
+          "source": "AI Research",
+          "date": "2026-03-09",
+          "tags": ["Admin", "IT", "Marketing"]
+        },
+        {
+          "id": "lead-coreweave",
+          "company": "CoreWeave",
+          "contact": "VP of People / TA Lead",
+          "value": 75000,
+          "signal": "NYC/Seattle cloud AI company scaling fast — SOX accounting + engineering roles",
+          "column": "New Leads",
+          "source": "AI Research",
+          "date": "2026-03-09",
+          "tags": ["IT", "Finance"]
+        },
+        {
+          "id": "lead-wayfair",
+          "company": "Wayfair",
+          "contact": "Procurement / TA Team",
+          "value": 70000,
+          "signal": "Boston eCommerce, 12K employees, post-layoff rebuilding with contract preference",
+          "column": "New Leads",
+          "source": "AI Research",
+          "date": "2026-03-09",
+          "tags": ["IT", "Marketing", "Finance"]
+        },
+        {
+          "id": "lead-expedia",
+          "company": "Expedia Group",
+          "contact": "Staffing/MSP Vendor Team",
+          "value": 100000,
+          "signal": "17K employees Seattle. Engineers + finance + marketing post-layoffs. Supplier diversity.",
+          "column": "New Leads",
+          "source": "AI Research",
+          "date": "2026-03-09",
+          "tags": ["IT", "Finance", "Marketing"]
+        },
+        {
+          "id": "lead-matchgroup",
+          "company": "Match Group",
+          "contact": "Head of TA / VP People",
+          "value": 65000,
+          "signal": "Dallas tech co, 2.5K employees. Engineers, data, marketing, creative designers",
+          "column": "New Leads",
+          "source": "AI Research",
+          "date": "2026-03-09",
+          "tags": ["IT", "Creative", "Marketing"]
+        },
+        {
+          "id": "lead-guild",
+          "company": "Guild Education",
+          "contact": "People Team",
+          "value": 60000,
+          "signal": "Denver EdTech, 1K+ employees growing. All six Rylem verticals apply. Mission-aligned",
+          "column": "New Leads",
+          "source": "AI Research",
+          "date": "2026-03-09",
+          "tags": ["IT", "Marketing", "HR", "Admin"]
+        },
+        {
+          "id": "lead-childrens",
+          "company": "Seattle Children's Hospital",
+          "contact": "Supplier Diversity Program",
+          "value": 60000,
+          "signal": "9K employees, explicit supplier diversity program. IT, accounting, admin needs",
+          "column": "New Leads",
+          "source": "AI Research",
+          "date": "2026-03-09",
+          "tags": ["IT", "Admin", "Finance"]
+        },
+        {
+          "id": "lead-relativity",
+          "company": "Relativity",
+          "contact": "People Team / LinkedIn",
+          "value": 55000,
+          "signal": "Chicago legal tech, 1.5K employees. Engineers, UX/UI, PMs, marketing, finance",
+          "column": "New Leads",
+          "source": "AI Research",
+          "date": "2026-03-09",
+          "tags": ["IT", "Creative", "Finance"]
+        },
+        {
+          "id": "lead-ibotta",
+          "company": "Ibotta",
+          "contact": "CFO Office / Head of People",
+          "value": 50000,
+          "signal": "Denver fintech, recently IPO'd. Scaling ops post-IPO, needs structured staffing",
+          "column": "New Leads",
+          "source": "AI Research",
+          "date": "2026-03-09",
+          "tags": ["IT", "Finance", "Marketing"]
+        },
+        {
+          "id": "lead-lumenalta",
+          "company": "Lumenalta",
+          "contact": "Operations / Procurement",
+          "value": 50000,
+          "signal": "NYC remote-first consultancy, 500-1K employees. Subcontracts heavily, diversity partner fit",
+          "column": "New Leads",
+          "source": "AI Research",
+          "date": "2026-03-09",
+          "tags": ["IT", "Creative"]
+        },
+        {
+          "id": "lead-finquery",
+          "company": "FinQuery",
+          "contact": "Head of People",
+          "value": 45000,
+          "signal": "Atlanta fintech, 300-500 employees. Engineers, accountants, marketing. Mid-market sweet spot",
+          "column": "New Leads",
+          "source": "AI Research",
+          "date": "2026-03-09",
+          "tags": ["IT", "Finance", "Marketing"]
+        },
+        {
+          "id": "lead-solomonpage",
+          "company": "Solomon Page",
+          "contact": "Business Development / Partnerships",
+          "value": 40000,
+          "signal": "NYC staffing firm — PARTNER model. They need diverse subcontractors for client mandates",
+          "column": "New Leads",
+          "source": "AI Research",
+          "date": "2026-03-09",
+          "tags": ["IT", "Finance", "Admin"]
+        },
+        {
+          "id": "lead-kforce",
+          "company": "Kforce",
+          "contact": "Business Development / Partnerships",
+          "value": 40000,
+          "signal": "Tampa staffing firm, 6K employees. Needs diverse agency partners for client requirements",
+          "column": "New Leads",
+          "source": "AI Research",
+          "date": "2026-03-09",
+          "tags": ["IT", "Finance"]
+        },
+        {
+          "id": "lead-port",
+          "company": "Port of Seattle",
+          "contact": "WMBE Procurement",
+          "value": 45000,
+          "signal": "Government with formal diversity contracting. IT, admin, finance — steady recurring revenue",
+          "column": "New Leads",
+          "source": "AI Research",
+          "date": "2026-03-09",
+          "tags": ["IT", "Admin"]
+        },
+        {
+          "id": "lead-telus",
+          "company": "TELUS International",
+          "contact": "US Procurement / Vendor Management",
+          "value": 60000,
+          "signal": "#1 on FlexJobs 2026 remote hiring list. 75K employees, massive remote workforce needs",
+          "column": "New Leads",
+          "source": "AI Research",
+          "date": "2026-03-09",
+          "tags": ["IT", "Admin"]
+        },
+        {
+          "id": "lead-gitlab",
+          "company": "GitLab",
+          "contact": "Head of People / Procurement",
+          "value": 45000,
+          "signal": "Fully remote, 2K employees. All verticals, progressive vendor policies, no geo limits",
+          "column": "New Leads",
+          "source": "AI Research",
+          "date": "2026-03-09",
+          "tags": ["IT", "Marketing", "HR"]
+        }
+      ]
+    }
+  ]
+}

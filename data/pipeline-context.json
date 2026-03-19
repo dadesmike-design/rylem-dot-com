@@ -1,0 +1,130 @@
+{
+  "lastUpdated": "2026-03-19",
+  "company": {
+    "name": "Rylem Staffing",
+    "founded": "2008",
+    "yearsInBusiness": 18,
+    "hq": "Seattle, WA",
+    "coverage": "Nationwide",
+    "verticals": ["IT", "Finance", "Marketing", "Creative", "HR", "Admin"],
+    "diversityCertified": true,
+    "candidateDatabase": "300,000+"
+  },
+  "financials": {
+    "feb2026": {
+      "revenue": 382914,
+      "revenueByCategory": {
+        "VMS": 196984,
+        "NonVMS": 125648,
+        "GDM": 60281
+      },
+      "grossProfit": 75480,
+      "grossMarginPct": 19.7,
+      "marginByCategory": {
+        "VMS": 25.6,
+        "NonVMS": 33.7,
+        "GDM": 20.3
+      },
+      "commissionExpense": 27747,
+      "netAfterCommissions": 47733,
+      "billingHeadcount": 48
+    },
+    "jan2026": {
+      "revenue": 415600,
+      "grossProfit": 92000,
+      "grossMarginPct": 22.1,
+      "billingHeadcount": 54
+    },
+    "annualRevenue": {
+      "2023": 4240000,
+      "2024": 4760000,
+      "2025": 6100000,
+      "2026ytd": 806000
+    },
+    "annualGrossMargin": {
+      "2023": 37.0,
+      "2024": 37.5,
+      "2025": 38.1,
+      "2026ytd": 36.4
+    },
+    "trend": "Revenue dropped 38% from May 2025 peak ($620K) to Feb 2026 ($383K). Margin trending slightly down in 2026."
+  },
+  "activeContractors": {
+    "total": 48,
+    "byClient": [
+      {"client": "Microsoft VMS", "contractors": 10, "monthlyRevenue": 124000, "type": "VMS", "bdm": "Mike/Julia"},
+      {"client": "Amazon VMS", "contractors": 5, "monthlyRevenue": 38000, "type": "VMS", "bdm": "Julia", "note": "Was 43 placements, now 5 - declining fast"},
+      {"client": "UpTop", "contractors": 5, "monthlyRevenue": 15000, "type": "NonVMS", "bdm": "Julia"},
+      {"client": "NW Restaurants", "contractors": 3, "monthlyRevenue": 8500, "type": "GDM", "bdm": "Mike"},
+      {"client": "Accordant Investments", "contractors": 3, "monthlyRevenue": 7200, "type": "GDM", "bdm": "Mike"},
+      {"client": "Costco", "contractors": 2, "monthlyRevenue": 15400, "type": "NonVMS", "bdm": "Julia"},
+      {"client": "T-Mobile", "contractors": 2, "monthlyRevenue": 12000, "type": "VMS", "bdm": "Julia"},
+      {"client": "Harbor Global", "contractors": 2, "monthlyRevenue": 5000, "type": "GDM", "bdm": "Mike"},
+      {"client": "PACCAR", "contractors": 1, "monthlyRevenue": 10700, "type": "NonVMS", "bdm": "Julia"},
+      {"client": "Zillow", "contractors": 1, "monthlyRevenue": 9000, "type": "NonVMS", "bdm": "Julia"},
+      {"client": "Funko", "contractors": 1, "monthlyRevenue": 7500, "type": "NonVMS", "bdm": "Julia"},
+      {"client": "Perkins Coie", "contractors": 1, "monthlyRevenue": 8000, "type": "NonVMS", "bdm": "Julia"},
+      {"client": "Project Kuiper", "contractors": 1, "monthlyRevenue": 7000, "type": "VMS", "bdm": "Marcela"},
+      {"client": "Concentric", "contractors": 1, "monthlyRevenue": 5500, "type": "NonVMS", "bdm": "Julia"},
+      {"client": "Agile One-SCE", "contractors": 1, "monthlyRevenue": 6000, "type": "VMS", "bdm": "Julia"},
+      {"client": "Northstar", "contractors": 1, "monthlyRevenue": 4500, "type": "NonVMS", "bdm": "Mike"},
+      {"client": "DeLille Cellars", "contractors": 1, "monthlyRevenue": 3000, "type": "GDM", "bdm": "Mike"},
+      {"client": "BizX", "contractors": 1, "monthlyRevenue": 3500, "type": "NonVMS", "bdm": "Mike"},
+      {"client": "Seattle Commercial Cleaners", "contractors": 1, "monthlyRevenue": 2800, "type": "GDM", "bdm": "Mike"}
+    ]
+  },
+  "team": {
+    "bdms": ["Mike Dades (CEO)", "Julia Dusseau"],
+    "recruitmentManager": "Marcela Resch",
+    "directorsOfRecruiting": "Liza Valencia",
+    "vmsRecruiters": ["Chino Matura", "Zac (Isaac)", "Debonair (Dave) Carzon", "Rey"],
+    "nonVmsRecruiters": ["Sheila Marie Alarte", "Tet (Maritess) Hernandez", "Joelle Davis"],
+    "sourcer": "Lea Rivera",
+    "admin": "Shai (Lhai)"
+  },
+  "recruiterPerformance": {
+    "period": "MTD March 2026 (NonVMS only)",
+    "data": [
+      {"name": "Sheila Marie Alarte", "submissions": 11, "clientSubs": 9, "interviews": 2, "hires": 1},
+      {"name": "Tet Hernandez", "submissions": 12, "clientSubs": 9, "interviews": 1, "hires": 1},
+      {"name": "Joelle Davis", "submissions": 0, "clientSubs": 0, "interviews": 0, "hires": 0}
+    ]
+  },
+  "commissions": {
+    "period": "Feb 2026",
+    "topRecruiterCommissions": [
+      {"name": "Sheila", "totalMargin": 36264, "commission": 5942},
+      {"name": "Tet", "totalMargin": 23000, "commission": 1840}
+    ],
+    "topBDMShares": [
+      {"name": "Mike", "share": 34911},
+      {"name": "Julia", "share": 28807},
+      {"name": "Lynnae Boe", "share": 3400}
+    ]
+  },
+  "topClients": {
+    "byRevenue": ["Microsoft ($124K/mo)", "Amazon ($38K/mo)", "Costco ($15.4K/mo)", "UpTop ($15K/mo)", "T-Mobile ($12K/mo)"],
+    "atRisk": ["Amazon VMS - down from 43 to 5 placements"],
+    "expanding": ["Microsoft VMS - stable at 10, room for more", "PACCAR - 29 contacts met, only 1 contractor"],
+    "landAndExpand": ["PACCAR (29 contacts, 1 contractor - should be 5-10)", "Costco (16 contacts, 2 contractors - room for 3-5 more)", "F5 (6 Sr Director contacts, $0 billing)"]
+  },
+  "diversityOutreach": {
+    "status": "In progress",
+    "totalTarget": 99,
+    "sent": 16,
+    "batches": [
+      {"batch": 1, "sent": 8, "date": "2026-03-18", "companies": ["Boeing", "Amazon", "Google", "Fortive", "WA OMWBE", "Starbucks", "Alaska Airlines"]},
+      {"batch": "Day 1", "sent": 8, "date": "2026-03-18", "companies": ["Salesforce", "Avalara", "Okta", "Highspot (x2)", "Redfin", "DocuSign (x2)"]}
+    ],
+    "remaining": 83
+  },
+  "competitorIntel": {
+    "clientsIdentified": 12,
+    "firms": ["Collabera", "Addison Group", "Volt", "Apex Systems", "Eliassen Group", "Parker Staffing", "Robert Half", "Motion Recruitment"],
+    "keyFindings": [
+      "Amazon has 5+ active non-VMS channels through competitors",
+      "Insurance sector hot: Symetra + Premera + Kaiser all contracting",
+      "Microsoft = #1 opportunity (diversity cert differentiator)"
+    ]
+  }
+}
