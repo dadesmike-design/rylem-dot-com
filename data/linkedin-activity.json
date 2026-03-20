@@ -1,0 +1,32 @@
+{
+  "lastScanned": "2026-03-19T21:00:00Z",
+  "activities": [
+    {
+      "id": "li-1",
+      "name": "Jenna Newbrey",
+      "company": "Okta",
+      "type": "message_reply",
+      "detail": "Replied to your connection: 'Thanks Mike, would love to hear about your diversity program'",
+      "timestamp": "2026-03-17T14:30:00Z",
+      "urgent": true
+    },
+    {
+      "id": "li-2",
+      "name": "Doug Seward",
+      "company": "DocuSign",
+      "type": "profile_view",
+      "detail": "Viewed your profile — he's on your outreach list",
+      "timestamp": "2026-03-18T09:15:00Z",
+      "urgent": false
+    },
+    {
+      "id": "li-3",
+      "name": "PACCAR Procurement",
+      "company": "PACCAR",
+      "type": "company_view",
+      "detail": "Someone at PACCAR viewed Rylem's company page. Julia met 29 contacts there.",
+      "timestamp": "2026-03-19T16:00:00Z",
+      "urgent": false
+    }
+  ]
+}

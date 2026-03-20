@@ -879,6 +879,123 @@
     color: var(--green);
     opacity: 0.8;
   }
+
+  /* ─── LINKEDIN SECTION ────────────────────────────── */
+  :root {
+    --purple: #8b5cf6;
+    --purple-dim: rgba(139,92,246,0.12);
+  }
+
+  .count-purple { background: var(--purple-dim); color: var(--purple); border: 1px solid rgba(139,92,246,0.25); }
+
+  .linkedin-section {
+    background: linear-gradient(135deg, rgba(139,92,246,0.05) 0%, transparent 60%);
+    border: 1px solid rgba(139,92,246,0.25);
+    border-radius: 14px;
+    padding: 20px;
+    margin-bottom: 28px;
+  }
+
+  .linkedin-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .linkedin-card {
+    background: rgba(139,92,246,0.06);
+    border: 1px solid rgba(139,92,246,0.18);
+    border-left: 3px solid var(--purple);
+    border-radius: 10px;
+    padding: 14px 16px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    transition: all 0.2s;
+  }
+
+  .linkedin-card:hover {
+    border-color: rgba(139,92,246,0.4);
+    border-left-color: var(--purple);
+    background: rgba(139,92,246,0.1);
+  }
+
+  .linkedin-card.handled {
+    opacity: 0.4;
+    text-decoration: line-through;
+  }
+
+  .linkedin-card-icon {
+    font-size: 22px;
+    flex-shrink: 0;
+    width: 42px;
+    height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(139,92,246,0.15);
+    border-radius: 10px;
+    border: 1px solid rgba(139,92,246,0.25);
+  }
+
+  .linkedin-card-body {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .linkedin-card-name {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text-bright);
+    margin-bottom: 2px;
+  }
+
+  .linkedin-card-name span {
+    color: var(--muted);
+    font-weight: 400;
+    font-size: 12px;
+  }
+
+  .linkedin-card-detail {
+    font-size: 12px;
+    color: var(--text);
+    margin-bottom: 4px;
+    line-height: 1.4;
+  }
+
+  .linkedin-card-meta {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .linkedin-time {
+    font-size: 11px;
+    color: var(--muted);
+  }
+
+  .linkedin-urgent-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: rgba(239,68,68,0.12);
+    border: 1px solid rgba(239,68,68,0.2);
+    color: #fca5a5;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 5px;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+  }
+
+  .btn-linkedin {
+    background: var(--purple-dim);
+    color: var(--purple);
+    border: 1px solid rgba(139,92,246,0.3);
+    flex-shrink: 0;
+  }
+  .btn-linkedin:hover { background: rgba(139,92,246,0.22); }
 </style>
 </head>
 <body>
@@ -982,7 +1099,7 @@ async function init() {
   } catch(e) { activityLog = []; }
 
   // Load data
-  await loadData();
+  await Promise.all([loadData(), loadLinkedIn()]);
   render();
 }
 
@@ -1125,6 +1242,7 @@ function render() {
 
   const html = `
     ${renderHotSection(hotLeads)}
+    ${renderLinkedInSection()}
     ${renderCallList(callListLeads)}
     ${renderSequences(seqGroups)}
     ${renderColdSection(coldLeads)}
@@ -1456,6 +1574,127 @@ function switchRep(rep) {
   url.searchParams.set('rep', rep);
   window.history.replaceState({}, '', url);
   render();
+}
+
+// ─── LINKEDIN SECTION ─────────────────────────────────
+let linkedInData = null;
+
+async function loadLinkedIn() {
+  try {
+    const res = await fetch('/data/linkedin-activity.json');
+    if (res.ok) linkedInData = await res.json();
+  } catch(e) {
+    console.warn('LinkedIn data load issue:', e);
+  }
+}
+
+function getHandledLinkedIn() {
+  try {
+    return JSON.parse(localStorage.getItem('rylem_linkedin_handled') || '[]');
+  } catch(e) { return []; }
+}
+
+function markLinkedInHandled(id) {
+  const handled = getHandledLinkedIn();
+  if (!handled.includes(id)) {
+    handled.push(id);
+    localStorage.setItem('rylem_linkedin_handled', JSON.stringify(handled));
+  }
+  // Dim card immediately without full re-render
+  const card = document.querySelector(`.linkedin-card[data-li-id="${id}"]`);
+  if (card) {
+    card.classList.add('handled');
+    const btn = card.querySelector('.btn-linkedin');
+    if (btn) btn.disabled = true;
+  }
+  // Update badge count
+  const allCards = document.querySelectorAll('.linkedin-card');
+  const handledNow = getHandledLinkedIn();
+  const remaining = [...allCards].filter(c => !handledNow.includes(c.dataset.liId)).length;
+  const badge = document.getElementById('linkedin-count-badge');
+  if (badge) {
+    if (remaining === 0) {
+      badge.style.display = 'none';
+      const grid = document.getElementById('linkedin-grid');
+      if (grid) grid.innerHTML = `<div class="empty-state">No LinkedIn activity to review ✅</div>`;
+    } else {
+      badge.textContent = remaining;
+    }
+  }
+  showToast(`✅ LinkedIn activity marked handled`);
+}
+
+function timeAgo(isoString) {
+  const now = new Date();
+  const then = new Date(isoString);
+  const diffMs = now - then;
+  const diffMins = Math.floor(diffMs / 60000);
+  const diffHours = Math.floor(diffMs / 3600000);
+  const diffDays = Math.floor(diffMs / 86400000);
+  if (diffMins < 60) return diffMins <= 1 ? 'Just now' : `${diffMins} minutes ago`;
+  if (diffHours < 24) return diffHours === 1 ? '1 hour ago' : `${diffHours} hours ago`;
+  if (diffDays === 1) return 'Yesterday';
+  if (diffDays < 7) return `${diffDays} days ago`;
+  return then.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+}
+
+function getLinkedInTypeIcon(type) {
+  const icons = {
+    message_reply: '💬',
+    profile_view: '👁️',
+    company_view: '🏢',
+    connection_accepted: '🤝'
+  };
+  return icons[type] || '🔔';
+}
+
+function renderLinkedInSection() {
+  if (!linkedInData) return '';
+
+  const handled = getHandledLinkedIn();
+  const activities = [...(linkedInData.activities || [])]
+    .sort((a, b) => {
+      // urgent first, then newest
+      if (a.urgent !== b.urgent) return a.urgent ? -1 : 1;
+      return new Date(b.timestamp) - new Date(a.timestamp);
+    });
+
+  const unhandled = activities.filter(a => !handled.includes(a.id));
+  const count = unhandled.length;
+
+  const inner = activities.length === 0 || count === 0
+    ? `<div class="empty-state">No LinkedIn activity to review ✅</div>`
+    : `<div class="linkedin-grid" id="linkedin-grid">
+        ${activities.map(a => {
+          const isHandled = handled.includes(a.id);
+          return `
+            <div class="linkedin-card ${isHandled ? 'handled' : ''}" data-li-id="${a.id}">
+              <div class="linkedin-card-icon">${getLinkedInTypeIcon(a.type)}</div>
+              <div class="linkedin-card-body">
+                <div class="linkedin-card-name">${a.name} <span>· ${a.company}</span></div>
+                <div class="linkedin-card-detail">${a.detail}</div>
+                <div class="linkedin-card-meta">
+                  <span class="linkedin-time">${timeAgo(a.timestamp)}</span>
+                  ${a.urgent ? `<span class="linkedin-urgent-badge">⚡ Urgent</span>` : ''}
+                </div>
+              </div>
+              <button class="btn btn-linkedin" onclick="markLinkedInHandled('${a.id}')" ${isHandled ? 'disabled' : ''}>
+                MARK HANDLED
+              </button>
+            </div>
+          `;
+        }).join('')}
+      </div>`;
+
+  return `
+    <div class="linkedin-section">
+      <div class="section-header">
+        <div class="section-title">💬 LINKEDIN — NEEDS RESPONSE</div>
+        ${count > 0 ? `<span class="section-count count-purple" id="linkedin-count-badge">${count}</span>` : ''}
+      </div>
+      ${inner}
+    </div>
+  `;
 }
 
 // ─── ESCAPE HTML ──────────────────────────────────────
