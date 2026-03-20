@@ -1,0 +1,97 @@
+{
+  "lastAnalyzed": "2026-03-19",
+  "totalPlacements": 3053,
+  "successfulPlacements": 2810,
+  "nonStarts": 240,
+  "overallWinRate": 92.1,
+
+  "insights": {
+    "bestCloser": {
+      "name": "Julia Dusseau",
+      "winRate": 93,
+      "placements": 138,
+      "avgMarginPerHr": 37,
+      "uniqueClients": 35,
+      "totalFees": 709500,
+      "insight": "Julia closes at highest rate AND highest margin. She diversifies across 35 clients vs Mike's 20. She's the model to replicate."
+    },
+    "mikeProfile": {
+      "name": "Mike Dades",
+      "winRate": 90,
+      "placements": 294,
+      "avgMarginPerHr": 20,
+      "uniqueClients": 20,
+      "totalFees": 183522,
+      "insight": "Mike handles volume (2x Julia's count) but at lower margin. His deals are bigger but less profitable per hour."
+    },
+    "juliaVsMike": "Julia averages $37/hr margin vs Mike's $20/hr. Julia's secret: higher-margin Non-VMS and direct hire deals. Mike runs more VMS volume. New BDMs should follow Julia's playbook."
+  },
+
+  "clientTiers": {
+    "tier1_volume": [
+      {"company": "Amazon.com", "placements": 901, "avgMargin": 14, "nonStarts": 90, "winRate": 91, "risk": "High volume but lowest margin. Non-start rate 10%."},
+      {"company": "Microsoft", "placements": 316, "avgMargin": 30, "nonStarts": 22, "winRate": 93, "risk": "Strong performer. 2x Amazon margin."},
+      {"company": "Expedia.com", "placements": 226, "avgMargin": 24, "nonStarts": 15, "winRate": 94, "risk": "Solid mid-tier margin."}
+    ],
+    "tier2_highMargin": [
+      {"company": "F5 Networks", "placements": 30, "avgMargin": 46, "insight": "Highest margin major client. Worth aggressive expansion."},
+      {"company": "Starbucks", "placements": 34, "avgMargin": 36, "insight": "High margin + diversity angle. Priority target."},
+      {"company": "T-Mobile", "placements": 72, "avgMargin": 35, "insight": "Good volume AND margin. Expand."},
+      {"company": "The Garrigan Lyman Group", "placements": 19, "avgMargin": 42, "insight": "Creative agency, highest margin small client."},
+      {"company": "Hailey Hansen clients", "placements": 44, "avgMargin": 47, "insight": "Hailey found highest-margin deals overall."}
+    ],
+    "insight": "Amazon drives volume but at $14/hr margin. Microsoft at $30/hr is 2x better per placement. F5 at $46/hr is the real money. Strategy: maintain Amazon volume, actively grow Microsoft/F5/Starbucks/T-Mobile."
+  },
+
+  "seasonality": {
+    "bestMonth": "October (304 placements)",
+    "worstMonth": "December (183 placements)",
+    "q1": 676,
+    "q2": 680,
+    "q3": 744,
+    "q4": 710,
+    "insight": "Q3 is peak (Jul-Sep = 744). December drops 40% from October. Start prospecting in August for Q4 close. January recovers fast."
+  },
+
+  "vmsInsights": {
+    "beeline": {"winRate": 91, "placements": 680, "avgMargin": 19},
+    "nonVms": {"winRate": 92, "placements": 466, "avgMargin": 28},
+    "fieldglass": {"winRate": 94, "placements": 82, "avgMargin": 30},
+    "iqn": {"winRate": 98, "placements": 48, "avgMargin": 24},
+    "insight": "Non-VMS pays 47% more margin than Beeline ($28 vs $19). Fieldglass is the best VMS ($30/hr, 94% win rate). IQN has near-perfect 98% win rate."
+  },
+
+  "contractDuration": {
+    "averageDays": 300,
+    "medianDays": 280,
+    "shortestDays": 52,
+    "longestDays": 728,
+    "insight": "Average contractor stays 10 months. Plan for renewal conversations at month 8."
+  },
+
+  "geography": {
+    "wa": 54,
+    "ca": 6,
+    "va": 2,
+    "ny": 2,
+    "insight": "84% of active placements are in WA. California is the next frontier. East coast (VA, NY) is tiny but growing."
+  },
+
+  "closeProabilityModel": {
+    "factors": [
+      {"factor": "VMS type is IQN", "weight": "+15%", "reason": "98% historical win rate"},
+      {"factor": "VMS type is Fieldglass", "weight": "+10%", "reason": "94% win rate, $30/hr margin"},
+      {"factor": "Client has existing placements", "weight": "+20%", "reason": "Land-and-expand is your strongest pattern"},
+      {"factor": "Julia is the salesperson", "weight": "+5%", "reason": "93% win rate vs company avg 92%"},
+      {"factor": "Non-VMS deal", "weight": "+5%", "reason": "Higher margin, same win rate"},
+      {"factor": "Email reply within 48hrs", "weight": "+25%", "reason": "Fast responders convert at much higher rates"},
+      {"factor": "October-January timing", "weight": "+5%", "reason": "Peak placement season"},
+      {"factor": "Diversity-certified buyer", "weight": "+10%", "reason": "Rylem's certification is a competitive moat"},
+      {"factor": "Company 500-5000 employees", "weight": "+5%", "reason": "Sweet spot for staffing needs"},
+      {"factor": "Amazon new req", "weight": "-5%", "reason": "10% non-start rate, lowest margin"},
+      {"factor": "No contact after 7 days", "weight": "-15%", "reason": "Deals that go cold rarely recover"},
+      {"factor": "December timing", "weight": "-10%", "reason": "40% drop in placements historically"}
+    ],
+    "baseRate": 92
+  }
+}
