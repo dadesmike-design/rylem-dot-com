@@ -126,7 +126,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div class="container">
       <p class="section-label">How We Work</p>
       <h2>Engagement Models</h2>
-      <div class="grid-3">
+      <div class="grid-3" style="grid-template-columns:repeat(2,1fr)">
         <div class="card">
           <h3>Contract Talent</h3>
           <p>Flexible professionals supporting critical initiatives and short-term projects.</p>
@@ -138,6 +138,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <div class="card">
           <h3>Project &amp; Consulting</h3>
           <p>Specialized professionals helping organizations launch or accelerate strategic initiatives.</p>
+        </div>
+        <div class="card">
+          <h3>Global Delivery</h3>
+          <p>Offshore resources that save 30% on costs while delivering 125% the output of their US-based counterparts.</p>
         </div>
       </div>
       <p style="margin-top:24px;">Companies choose Rylem because we combine recruiting expertise with a deep understanding of how organizations operate.</p>
@@ -199,7 +203,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <h2>Let&#8217;s Talk About Your Next Initiative</h2>
         <p>Whether you&#8217;re building a team or scaling a program, Rylem can help.</p>
         <div class="cta-actions">
-          <a href="hire-talent.html" class="btn btn-primary btn-lg">Discuss Your Hiring Needs</a>
+          <a href="#" onclick="document.getElementById('rylem-chat-toggle').click();return false;" class="btn btn-primary btn-lg">Talk to Rylem's AI Assistant</a>
         </div>
       </div>
     </div>
@@ -214,5 +218,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <div class="container"><p>&copy; 2026 Rylem. All rights reserved.</p></div>
     </div>
   </footer>
+<script src="chatbot-widget.js"></script>
 </body>
 </html>

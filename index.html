@@ -68,19 +68,19 @@ img{max-width:100%;display:block}
 .logos-row span{font-size:1.35rem;font-weight:800;color:#c5c9d2;letter-spacing:-.02em;transition:color .3s;cursor:default}
 .logos-row span:hover{color:#374151}
 
-/* PROCESS */
-.process{padding:100px 5vw 100px;background:var(--white)}
-.process-header{text-align:center;margin-bottom:72px}
-.process-header .tag{display:inline-block;background:#eef2ff;color:var(--blue);padding:6px 18px;border-radius:100px;font-size:.75rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;margin-bottom:16px}
-.process-header h2{font-size:clamp(1.8rem,3vw,2.6rem);font-weight:800;letter-spacing:-.03em;margin-bottom:14px}
-.process-header p{font-size:1.05rem;color:var(--muted);max-width:640px;margin:0 auto;line-height:1.8}
-.steps-row{display:grid;grid-template-columns:repeat(4,1fr);gap:0;max-width:1100px;margin:0 auto;position:relative}
-.steps-row::before{content:'';position:absolute;top:36px;left:10%;right:10%;height:2px;background:linear-gradient(90deg,var(--border) 0%,var(--blue) 50%,var(--border) 100%);z-index:0}
-.step-card{text-align:center;position:relative;z-index:1;padding:0 16px}
-.step-num{width:72px;height:72px;background:var(--white);border:2px solid var(--blue);border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;color:var(--blue);font-size:1.3rem;margin:0 auto 20px;transition:all .3s}
-.step-card:hover .step-num{background:var(--blue);color:#fff}
-.step-card h3{font-size:1rem;font-weight:700;margin-bottom:8px}
-.step-card p{font-size:.88rem;color:var(--muted);line-height:1.7}
+/* CORE VALUES */
+.values{padding:100px 5vw 100px;background:var(--white)}
+.values-header{text-align:center;margin-bottom:72px}
+.values-header .tag{display:inline-block;background:#eef2ff;color:var(--blue);padding:6px 18px;border-radius:100px;font-size:.75rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;margin-bottom:16px}
+.values-header h2{font-size:clamp(1.8rem,3vw,2.6rem);font-weight:800;letter-spacing:-.03em;margin-bottom:14px}
+.values-header p{font-size:1.05rem;color:var(--muted);max-width:640px;margin:0 auto;line-height:1.8}
+.values-row{display:grid;grid-template-columns:repeat(3,1fr);gap:40px;max-width:1100px;margin:0 auto}
+.value-card{text-align:center;padding:40px 24px;border-radius:16px;border:1px solid var(--border);transition:all .3s}
+.value-card:hover{border-color:var(--blue);box-shadow:0 8px 32px rgba(30,64,175,.08)}
+.value-icon{font-size:2.4rem;margin-bottom:20px}
+.value-card h3{font-size:1.2rem;font-weight:800;letter-spacing:-.02em;margin-bottom:12px}
+.value-card p{font-size:.95rem;color:var(--muted);line-height:1.8}
+@media(max-width:768px){.values-row{grid-template-columns:1fr;gap:24px}}
 
 /* IMPACT */
 .impact{padding:100px 5vw 100px;background:var(--light)}
@@ -215,7 +215,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <p class="hero-sub">Rylem helps organizations move high-stakes work forward by deploying experienced consultants who integrate quickly and drive results from day one.</p>
 <div class="hero-speed">Proven operators. Rapid deployment. Stronger execution.</div>
 <div class="hero-btns">
-<a href="https://calendly.com/miked-rylem/30min" target="_blank" class="btn-primary">Talk Through Your Initiative</a>
+<a href="#" onclick="document.getElementById('rylem-chat-toggle').click();return false;" class="btn-primary">Talk to Rylem's AI Assistant</a>
 <a href="capabilities.html" class="btn-outline">See How We Work</a>
 </div>
 </div>
@@ -261,33 +261,28 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </div>
 </section>
 
-<!-- OUR APPROACH -->
-<section class="process">
-<div class="process-header">
-<span class="tag">Our Approach</span>
-<h2>A Proven Approach to Delivering Critical Work</h2>
-<p>Designed to accelerate execution while maintaining quality, alignment, and control.</p>
+<!-- CORE VALUES -->
+<section class="values">
+<div class="values-header">
+<span class="tag">Our Core Values</span>
+<h2>Grit · Character · Results</h2>
+<p>The principles that drive every engagement, every team, and every outcome we deliver.</p>
 </div>
-<div class="steps-row">
-<div class="step-card">
-<div class="step-num">1</div>
-<h3>Understand the Objective</h3>
-<p>Align on business priorities, constraints, and what success looks like.</p>
+<div class="values-row">
+<div class="value-card">
+<div class="value-icon">💪</div>
+<h3>Grit</h3>
+<p>We don't quit. We push through complexity, tight timelines, and ambiguity to move critical work forward.</p>
 </div>
-<div class="step-card">
-<div class="step-num">2</div>
-<h3>Activate the Right Expertise</h3>
-<p>Engage experienced consultants aligned to your needs.</p>
+<div class="value-card">
+<div class="value-icon">🤝</div>
+<h3>Character</h3>
+<p>We do the right thing. Integrity drives every relationship, every engagement, every decision.</p>
 </div>
-<div class="step-card">
-<div class="step-num">3</div>
-<h3>Validate for Impact</h3>
-<p>Ensure readiness to contribute immediately with the right experience and judgment.</p>
-</div>
-<div class="step-card">
-<div class="step-num">4</div>
-<h3>Drive Execution</h3>
-<p>Integrate quickly and move work forward with accountability and consistency.</p>
+<div class="value-card">
+<div class="value-icon">🎯</div>
+<h3>Results</h3>
+<p>We measure ourselves by outcomes. Initiatives delivered, milestones hit, impact realized.</p>
 </div>
 </div>
 </section>
@@ -304,7 +299,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <div class="impact-text">
 <h3>Continuity Powers Delivery</h3>
 <p>Disruption slows progress. Every transition creates drag. Our focus is maintaining continuity so your work keeps moving forward without interruption.</p>
-<a href="hire-talent.html" class="btn-primary" style="margin-top:8px">Talk Through Your Initiative</a>
+<a href="#" onclick="document.getElementById('rylem-chat-toggle').click();return false;" class="btn-primary" style="margin-top:8px">Talk to Rylem's AI Assistant</a>
 </div>
 <div class="impact-stats">
 <div class="stat-box"><div class="num">0%</div><div class="lbl">Unplanned project disruption</div></div>
@@ -321,7 +316,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <div class="cta-inner">
 <h2>Move Your Most Important Work Forward</h2>
 <p>Tell us what you're working on. We'll help you think through the best way to get it done.</p>
-<a href="https://calendly.com/miked-rylem/30min" target="_blank" class="btn-white">Start a Conversation</a>
+<a href="#" onclick="document.getElementById('rylem-chat-toggle').click();return false;" class="btn-white">Start a Conversation</a>
 <div class="cta-micro">No obligation. Just a focused discussion on your priorities.</div>
 </div>
 </section>
@@ -339,5 +334,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </div>
 </footer>
 
+<script src="chatbot-widget.js"></script>
 </body>
 </html>
